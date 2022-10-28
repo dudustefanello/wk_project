@@ -102,6 +102,15 @@
             <Form>formPedido</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="helpers.pas"/>
+        <DCCReference Include="dados\pedidoData.pas">
+            <Form>DataModule1</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="interfaces\interfacePedido.pas"/>
+        <DCCReference Include="interfaces\interfaceProdutos.pas"/>
+        <DCCReference Include="interfaces\interfaceClientes.pas"/>
         <None Include="database.sql"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
@@ -125,7 +134,7 @@
                 </Source>
             </Delphi.Personality>
             <Deployment Version="4">
-                <DeployFile LocalName="New1.sql" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="database.sql" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
