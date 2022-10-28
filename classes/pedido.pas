@@ -3,7 +3,7 @@ unit pedido;
 interface
 
 uses
-  interfacePedido, pedidoData, interfaceProdutos, System.SysUtils;
+  interfacePedido, pedidoData, interfaceProdutos, System.SysUtils, Data.DB;
 
 type
   EErroPedido = class(Exception);
@@ -14,17 +14,19 @@ type
     FProdutos: IProdutos;
     FCodigoCliente: integer;
 
-    procedure InserirItem(const ACodigoProduto: integer; const AQuantidade: Currency; const AValor: Currency);
+    procedure InserirItem(const ACodigoProduto, AQuantidade: integer; const AValor: Currency; const AId: integer = 0);
     procedure SetCodigoCliente(const ACodigo: integer);
-    procedure CarregarPedido(const ANumero: integer = 0);
-    procedure CancelarPedido(const ANumero: integer = 0);
+    procedure CarregarPedido(const ANumero: integer);
+    procedure CancelarPedido(const ANumero: integer);
     procedure GravarPedido;                              
     procedure GravarPedidoItens(const ANrPedido: integer);
     procedure CarregarPedidoItens(const ANumero: integer);
+    procedure RemoverItem;
 
-    function GetQuantidadeTotal: currency;
+    function GetQuantidadeTotal: integer;
     function GetValorTotal: currency;
     function GetCodigoCliente: integer;
+    function GetDataSource: TDataSource;
 
   public
     constructor Create;
@@ -35,11 +37,15 @@ type
 
 implementation
 
+uses
+  produtos, FireDAC.Stan.Param;
+
 { TPedido }
 
 constructor TPedido.Create;
 begin
   FDados := TdmPedido.Create(nil);
+  FProdutos := TProdutos.Create;
 end;
 
 destructor TPedido.Destroy;
@@ -56,7 +62,8 @@ begin
   
     FDados.FDTransaction1.Commit;
   finally
-    FDados.FDTransaction1.Rollback;
+    if FDados.FDTransaction1.Active then
+      FDados.FDTransaction1.Rollback;
   end;
 end;
 
@@ -87,10 +94,10 @@ begin
   begin  
     FDados.cItens.Append;
     try
-      FDados.cItensproduto.Value := FDados.FDQueryPedido.ParamByName('produto').AsInteger;
-      FDados.cItensquantidade.Value := FDados.FDQueryPedido.ParamByName('quantidade').AsCurrency;
-      FDados.cItensvalor.Value := FDados.FDQueryPedido.ParamByName('valor_unitario').AsCurrency;
-      FDados.cItenstotal.Value := FDados.FDQueryPedido.ParamByName('valor_total').AsCurrency;
+      FDados.cItensproduto.Value := FDados.FDQueryPedido.FieldByName('produto').AsInteger;
+      FDados.cItensquantidade.Value := FDados.FDQueryPedido.FieldByName('quantidade').AsInteger;
+      FDados.cItensvalor.Value := FDados.FDQueryPedido.FieldByName('valor_unitario').AsCurrency;
+      FDados.cItenstotal.Value := FDados.FDQueryPedido.FieldByName('valor_total').AsCurrency;
 
       FDados.cItens.Post;
     finally
@@ -105,7 +112,12 @@ begin
   Result := FCodigoCliente;
 end;
 
-function TPedido.GetQuantidadeTotal: currency;
+function TPedido.GetDataSource: TDataSource;
+begin
+  Result := FDados.dItens;
+end;
+
+function TPedido.GetQuantidadeTotal: integer;
 begin
   Result := FDados.cItens.Aggregates[0].Value;
 end;
@@ -132,13 +144,14 @@ begin
     FDados.FDQueryGravaPedido.ParamByName('cliente').AsCurrency := GetCodigoCliente;
     FDados.FDQueryGravaPedido.ParamByName('valor_total').AsCurrency := GetValorTotal;
 
-    FDados.FDQueryGravaItens.ExecSQL;
+    FDados.FDQueryGravaPedido.ExecSQL;
   
     GravarPedidoItens(nrPedido);
   
     FDados.FDTransaction1.Commit;
   finally
-    FDados.FDTransaction1.Rollback;
+    if FDados.FDTransaction1.Active then
+      FDados.FDTransaction1.Rollback;
   end;
 end;
 
@@ -159,7 +172,7 @@ begin
   end;  
 end;
 
-procedure TPedido.InserirItem(const ACodigoProduto: integer; const AQuantidade, AValor: Currency);
+procedure TPedido.InserirItem(const ACodigoProduto, AQuantidade: integer; const AValor: Currency; const AId: integer = 0);
 begin
   if AQuantidade <= 0 then
     raise EErroPedido.Create('Quantidade não pode ser menor ou igual a zero.');
@@ -167,8 +180,13 @@ begin
   if AValor <= 0 then
     raise EErroPedido.Create('Valor não pode ser menor ou igual a zero.');
 
-  FDados.cItens.Append;
+  FDados.cItens.DisableControls;
   try
+    if AId = 0 then
+      FDados.cItens.Append
+    else
+      FDados.cItens.Edit;
+
     FDados.cItensproduto.Value := ACodigoProduto;
     FDados.cItensdescricao.Value := FProdutos.GetDescricaoProduto(ACodigoProduto);
     FDados.cItensquantidade.Value := AQuantidade;
@@ -178,6 +196,17 @@ begin
     FDados.cItens.Post;
   finally
     FDados.cItens.Cancel;
+    FDados.cItens.EnableControls;
+  end;
+end;
+
+procedure TPedido.RemoverItem;
+begin
+  FDados.cItens.DisableControls;
+  try
+    FDados.cItens.Delete;
+  finally
+    FDados.cItens.EnableControls;
   end;
 end;
 

@@ -21,6 +21,7 @@ uses
 
 function TEditHelper.AsCurrency: currency;
 begin
+  Self.Text := StringReplace(Self.Text, 'R$', '', [rfReplaceAll, rfIgnoreCase]);
   Result := StrToCurrDef(Self.Text, 0.0);
 end;
 

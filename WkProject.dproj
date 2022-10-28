@@ -106,12 +106,29 @@
         <DCCReference Include="interfaces\interfacePedido.pas"/>
         <DCCReference Include="interfaces\interfaceProdutos.pas"/>
         <DCCReference Include="interfaces\interfaceClientes.pas"/>
+        <DCCReference Include="classes\pedido.pas"/>
+        <DCCReference Include="classes\produtos.pas"/>
+        <DCCReference Include="dados\projectData.pas">
+            <Form>dmProjeto</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <DCCReference Include="dados\pedidoData.pas">
             <Form>dmPedido</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="classes\pedido.pas"/>
+        <DCCReference Include="classes\clientes.pas"/>
+        <DCCReference Include="dados\clienteData.pas">
+            <Form>dmCliente</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="dados\produtoData.pas">
+            <Form>dmProduto</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <None Include="database.sql"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>

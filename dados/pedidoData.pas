@@ -3,46 +3,41 @@ unit pedidoData;
 interface
 
 uses
-  System.SysUtils, System.Classes, FireDAC.Stan.Intf, FireDAC.Stan.Option,
-  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
-  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.VCLUI.Wait,
-  Data.DB, FireDAC.Comp.Client, FireDAC.Phys.MySQL, FireDAC.Phys.MySQLDef,
-  FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt,
-  FireDAC.Comp.DataSet, Datasnap.DBClient;
+  System.SysUtils, System.Classes, projectData, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf,
+  FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
+  FireDAC.Phys.MySQL, FireDAC.Phys.MySQLDef, FireDAC.VCLUI.Wait,
+  FireDAC.Comp.Client, Data.DB, FireDAC.Stan.Param, FireDAC.DatS,
+  FireDAC.DApt.Intf, FireDAC.DApt, Datasnap.DBClient, FireDAC.Comp.DataSet;
 
 type
-  TdmPedido = class(TDataModule)
-    FDConnection1: TFDConnection;
-    FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink;
-    FDTransaction1: TFDTransaction;
+  TdmPedido = class(TdmProjeto)
     FDQueryGravaPedido: TFDQuery;
-    cItens: TClientDataSet;
-    dItens: TDataSource;
-    cItensid: TIntegerField;
-    cItensproduto: TIntegerField;
-    cItensdescricao: TStringField;
-    cItensquantidade: TCurrencyField;
-    cItensvalor: TCurrencyField;
-    cItenstotal: TCurrencyField;
     FDQueryGravaItens: TFDQuery;
     FDQueryNumeroPedido: TFDQuery;
     FDQueryPedido: TFDQuery;
     FDQueryDelete: TFDQuery;
-    procedure DataModuleCreate(Sender: TObject);
-
+    dItens: TDataSource;
+    cItens: TClientDataSet;
+    cItensid: TAutoIncField;
+    cItensproduto: TIntegerField;
+    cItensdescricao: TStringField;
+    cItensquantidade: TIntegerField;
+    cItensvalor: TCurrencyField;
+    cItenstotal: TCurrencyField;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
   end;
+
+var
+  dmPedido: TdmPedido;
 
 implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 {$R *.dfm}
-
-{ TDataModule1 }
-
-procedure TdmPedido.DataModuleCreate(Sender: TObject);
-begin
-FDTransaction1.
-end;
 
 end.

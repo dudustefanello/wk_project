@@ -97,6 +97,6 @@ CREATE TABLE `pedido_item` (
   KEY `pedido_item_FK` (`produto`),
   KEY `pedido_item_pedido_IDX` (`pedido`) USING BTREE,
   CONSTRAINT `pedido_item_FK` FOREIGN KEY (`produto`) REFERENCES `produto` (`codigo`),
-  CONSTRAINT `pedido_item_FK_1` FOREIGN KEY (`pedido`) REFERENCES `pedido` (`numero`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `pedido_item_FK_1` FOREIGN KEY (`pedido`) REFERENCES `pedido` (`numero`) ON DELETE CASCADE ON UPDATE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
