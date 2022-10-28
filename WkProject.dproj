@@ -103,14 +103,15 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="helpers.pas"/>
-        <DCCReference Include="dados\pedidoData.pas">
-            <Form>DataModule1</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TDataModule</DesignClass>
-        </DCCReference>
         <DCCReference Include="interfaces\interfacePedido.pas"/>
         <DCCReference Include="interfaces\interfaceProdutos.pas"/>
         <DCCReference Include="interfaces\interfaceClientes.pas"/>
+        <DCCReference Include="dados\pedidoData.pas">
+            <Form>dmPedido</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="classes\pedido.pas"/>
         <None Include="database.sql"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>

@@ -75,7 +75,7 @@ begin
       Exit;
       
     eNome.Text := FClientes.GetNomeCliente(eCliente.AsInteger);
-    FPedido.SetCliente(eProduto.AsInteger);
+    FPedido.SetCodigoCliente(eProduto.AsInteger);
   except on E: Exception do
     ShowMessage(E.Message);
   end;

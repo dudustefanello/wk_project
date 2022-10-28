@@ -75,11 +75,11 @@ INSERT INTO produto (descricao, preco_venda) VALUES('CAFÉ EM PÓ', 4.35);
 
 
 CREATE TABLE `pedido` (
-  `codigo` int NOT NULL AUTO_INCREMENT,
+  `numero` int NOT NULL,
   `data_emissao` date NOT NULL,
   `cliente` int DEFAULT NULL,
   `valor_total` decimal(10,2) NOT NULL,
-  PRIMARY KEY (`codigo`),
+  PRIMARY KEY (`numero`),
   KEY `pedido_FK` (`cliente`),
   KEY `pedido_data_emissao_IDX` (`data_emissao`,`cliente`) USING BTREE,
   CONSTRAINT `pedido_FK` FOREIGN KEY (`cliente`) REFERENCES `cliente` (`codigo`)
@@ -97,6 +97,6 @@ CREATE TABLE `pedido_item` (
   KEY `pedido_item_FK` (`produto`),
   KEY `pedido_item_pedido_IDX` (`pedido`) USING BTREE,
   CONSTRAINT `pedido_item_FK` FOREIGN KEY (`produto`) REFERENCES `produto` (`codigo`),
-  CONSTRAINT `pedido_item_FK_1` FOREIGN KEY (`pedido`) REFERENCES `pedido` (`codigo`)
+  CONSTRAINT `pedido_item_FK_1` FOREIGN KEY (`pedido`) REFERENCES `pedido` (`numero`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 

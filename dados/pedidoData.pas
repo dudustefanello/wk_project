@@ -15,7 +15,7 @@ type
     FDConnection1: TFDConnection;
     FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink;
     FDTransaction1: TFDTransaction;
-    FDQuery1: TFDQuery;
+    FDQueryGravaPedido: TFDQuery;
     cItens: TClientDataSet;
     dItens: TDataSource;
     cItensid: TIntegerField;
@@ -24,6 +24,11 @@ type
     cItensquantidade: TCurrencyField;
     cItensvalor: TCurrencyField;
     cItenstotal: TCurrencyField;
+    FDQueryGravaItens: TFDQuery;
+    FDQueryNumeroPedido: TFDQuery;
+    FDQueryPedido: TFDQuery;
+    FDQueryDelete: TFDQuery;
+    procedure DataModuleCreate(Sender: TObject);
 
   end;
 
@@ -34,5 +39,10 @@ implementation
 {$R *.dfm}
 
 { TDataModule1 }
+
+procedure TdmPedido.DataModuleCreate(Sender: TObject);
+begin
+FDTransaction1.
+end;
 
 end.

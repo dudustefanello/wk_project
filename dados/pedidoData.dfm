@@ -1,6 +1,7 @@
 object dmPedido: TdmPedido
-  Height = 287
-  Width = 640
+  OnCreate = DataModuleCreate
+  Height = 404
+  Width = 427
   object FDConnection1: TFDConnection
     Params.Strings = (
       'Database=wk_project'
@@ -8,6 +9,8 @@ object dmPedido: TdmPedido
       'Password=1234'
       'Server=localhost'
       'DriverID=MySQL')
+    TxOptions.AutoStart = False
+    TxOptions.AutoStop = False
     Connected = True
     Transaction = FDTransaction1
     Left = 72
@@ -19,14 +22,36 @@ object dmPedido: TdmPedido
     Top = 16
   end
   object FDTransaction1: TFDTransaction
+    Options.AutoStart = False
+    Options.AutoStop = False
     Connection = FDConnection1
     Left = 72
     Top = 144
   end
-  object FDQuery1: TFDQuery
+  object FDQueryGravaPedido: TFDQuery
     Connection = FDConnection1
+    SQL.Strings = (
+      'INSERT INTO pedido (numero, data_emissao, cliente, valor_total)'
+      'VALUES (:numero, :data_emissao, :cliente, :valor_total);')
     Left = 72
     Top = 216
+    ParamData = <
+      item
+        Name = 'NUMERO'
+        ParamType = ptInput
+      end
+      item
+        Name = 'DATA_EMISSAO'
+        ParamType = ptInput
+      end
+      item
+        Name = 'CLIENTE'
+        ParamType = ptInput
+      end
+      item
+        Name = 'VALOR_TOTAL'
+        ParamType = ptInput
+      end>
   end
   object cItens: TClientDataSet
     PersistDataPacket.Data = {
@@ -107,5 +132,73 @@ object dmPedido: TdmPedido
     DataSet = cItens
     Left = 216
     Top = 80
+  end
+  object FDQueryGravaItens: TFDQuery
+    Connection = FDConnection1
+    SQL.Strings = (
+      
+        'INSERT INTO pedido_item (pedido, produto, quantidade, valor_unit' +
+        'ario, valor_total)'
+      
+        'VALUES (:pedido, :produto, :quantidade, :valor_unitario, :valor_' +
+        'total);')
+    Left = 192
+    Top = 216
+    ParamData = <
+      item
+        Name = 'PEDIDO'
+        ParamType = ptInput
+      end
+      item
+        Name = 'PRODUTO'
+        ParamType = ptInput
+      end
+      item
+        Name = 'QUANTIDADE'
+        ParamType = ptInput
+      end
+      item
+        Name = 'VALOR_UNITARIO'
+        ParamType = ptInput
+      end
+      item
+        Name = 'VALOR_TOTAL'
+        ParamType = ptInput
+      end>
+  end
+  object FDQueryNumeroPedido: TFDQuery
+    Connection = FDConnection1
+    SQL.Strings = (
+      'SELECT COALESCE(MAX(NUMERO) + 1, 1) AS NUMERO FROM PEDIDO;')
+    Left = 320
+    Top = 216
+  end
+  object FDQueryPedido: TFDQuery
+    Connection = FDConnection1
+    SQL.Strings = (
+      'SELECT * FROM PEDIDO AS P '
+      'JOIN PEDIDO_ITEM AS I'
+      #9'ON I.PEDIDO = P.NUMERO'
+      'WHERE NUMERO = :NUMERO;')
+    Left = 72
+    Top = 272
+    ParamData = <
+      item
+        Name = 'NUMERO'
+        ParamType = ptInput
+        Value = Null
+      end>
+  end
+  object FDQueryDelete: TFDQuery
+    Connection = FDConnection1
+    SQL.Strings = (
+      'DELETE FROM PEDIDO WHERE NUMERO = :NUMERO ;')
+    Left = 192
+    Top = 272
+    ParamData = <
+      item
+        Name = 'NUMERO'
+        ParamType = ptInput
+      end>
   end
 end
