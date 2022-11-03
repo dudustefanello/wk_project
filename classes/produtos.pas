@@ -22,6 +22,9 @@ type
 
 implementation
 
+uses
+  FireDAC.Stan.Param;
+
 { TProdutos }
 
 constructor TProdutos.Create;
