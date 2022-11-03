@@ -1,6 +1,9 @@
 inherited dmProduto: TdmProduto
   Height = 304
   Width = 174
+  inherited FDConnection1: TFDConnection
+    Connected = False
+  end
   object FDQueryProduto: TFDQuery
     Connection = FDConnection1
     SQL.Strings = (

@@ -10,13 +10,12 @@ object dmProjeto: TdmProjeto
       'DriverID=MySQL')
     TxOptions.AutoStart = False
     TxOptions.AutoStop = False
-    Connected = True
     Transaction = FDTransaction1
     Left = 72
     Top = 104
   end
   object FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink
-    VendorLib = 'E:\outros\delphi\wk_project\libmysql.dll'
+    VendorLib = '..\..\libmysql.dll'
     Left = 72
     Top = 32
   end

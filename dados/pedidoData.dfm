@@ -1,6 +1,9 @@
 inherited dmPedido: TdmPedido
   Height = 393
   Width = 431
+  inherited FDConnection1: TFDConnection
+    Connected = False
+  end
   object FDQueryGravaPedido: TFDQuery
     Connection = FDConnection1
     SQL.Strings = (
@@ -135,11 +138,13 @@ inherited dmPedido: TdmPedido
         Active = True
         AggregateName = 'QuantidadeTotal'
         Expression = 'sum(quantidade)'
+        Visible = False
       end
       item
         Active = True
         AggregateName = 'ValorTotal'
         Expression = 'sum(total)'
+        Visible = False
       end>
     AggregatesActive = True
     FieldDefs = <
