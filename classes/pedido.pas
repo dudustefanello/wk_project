@@ -77,6 +77,9 @@ begin
     FDados.FDQueryPedido.ParamByName('numero').AsInteger := ANumero;  
     FDados.FDQueryPedido.Open;
 
+    if FDados.FDQueryPedido.IsEmpty then
+      raise EErroPedido.Create('Pedido não encontrado.');
+
     FCodigoCliente := FDados.FDQueryPedido.FieldByName('cliente').AsInteger;
 
     CarregarPedidoItens(ANumero);
@@ -119,11 +122,15 @@ end;
 
 function TPedido.GetQuantidadeTotal: integer;
 begin
+  if FDados.cItens.isEmpty then
+    Exit(0);
   Result := FDados.cItens.Aggregates[0].Value;
 end;
 
 function TPedido.GetValorTotal: currency;
 begin
+  if FDados.cItens.isEmpty then
+    Exit(0);
   Result := FDados.cItens.Aggregates[1].Value;
 end;
 

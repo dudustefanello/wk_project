@@ -29,6 +29,7 @@ type
     aCarregarPedido: TAction;
     aCancelarPedido: TAction;
     aGravarPedido: TAction;
+    aLimpar: TAction;
 
     procedure eProdutoExit(Sender: TObject);
     procedure aInserirItemExecute(Sender: TObject);
@@ -37,8 +38,8 @@ type
     procedure aCancelarPedidoExecute(Sender: TObject);
     procedure aGravarPedidoExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure gProdutosKeyUp(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
+    procedure gProdutosKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure aLimparExecute(Sender: TObject);
 
   private
     FPedido: IPedido;
@@ -165,6 +166,7 @@ begin
     numero := InputBox('Informe o número do pedido para cancelar', 'Número:', '');
     FPedido.CancelarPedido(StrToIntDef(numero, 0));
     ShowMessage('Pedido cancelado com sucesso.');
+    LimparCampos;
   except on E: Exception do
     ShowMessage(E.Message);
   end;
@@ -180,6 +182,8 @@ begin
     eCliente.Text := FPedido.GetCodigoCliente.ToString;
     eNome.Text := FClientes.GetNomeCliente(FPedido.GetCodigoCliente);
     AtualizarTotais;
+    bCarregar.Action := aLimpar;
+    aInserirItem.Enabled := False;
   except on E: Exception do
     ShowMessage(E.Message);
   end;
@@ -217,6 +221,13 @@ begin
   except on E: Exception do
     ShowMessage(E.Message);
   end;
+end;
+
+procedure TformPedido.aLimparExecute(Sender: TObject);
+begin
+  LimparCampos;
+  bCarregar.Action := aCarregarPedido;
+  aInserirItem.Enabled := True;
 end;
 
 end.

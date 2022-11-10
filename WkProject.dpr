@@ -13,13 +13,15 @@ uses
   pedidoData in 'dados\pedidoData.pas' {dmPedido: TDataModule},
   clientes in 'classes\clientes.pas',
   clienteData in 'dados\clienteData.pas' {dmCliente: TDataModule},
-  produtoData in 'dados\produtoData.pas' {dmProduto: TDataModule};
+  produtoData in 'dados\produtoData.pas' {dmProduto: TDataModule},
+  initData in 'dados\initData.pas' {initDataModule: TDataModule};
 
 {$R *.res}
 
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TinitDataModule, initDataModule);
   Application.CreateForm(TformPedido, formPedido);
   Application.Run;
 end.

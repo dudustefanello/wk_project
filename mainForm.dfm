@@ -129,6 +129,7 @@ object formPedido: TformPedido
     TabOrder = 6
     Text = ''
     OnExit = eClienteExit
+    ExplicitTop = 387
   end
   object eVlrTotal: TLabeledEdit
     Left = 791
@@ -145,6 +146,8 @@ object formPedido: TformPedido
     ReadOnly = True
     TabOrder = 7
     Text = ''
+    ExplicitLeft = 787
+    ExplicitTop = 387
   end
   object eQtdTotal: TLabeledEdit
     Left = 623
@@ -161,6 +164,8 @@ object formPedido: TformPedido
     ReadOnly = True
     TabOrder = 8
     Text = ''
+    ExplicitLeft = 619
+    ExplicitTop = 387
   end
   object bGravar: TButton
     Left = 344
@@ -171,6 +176,8 @@ object formPedido: TformPedido
     Anchors = [akLeft, akRight, akBottom]
     Enabled = False
     TabOrder = 9
+    ExplicitTop = 416
+    ExplicitWidth = 535
   end
   object bCarregar: TButton
     Left = 8
@@ -180,6 +187,7 @@ object formPedido: TformPedido
     Action = aCarregarPedido
     Anchors = [akLeft, akBottom]
     TabOrder = 10
+    ExplicitTop = 416
   end
   object bCancelar: TButton
     Left = 168
@@ -189,6 +197,7 @@ object formPedido: TformPedido
     Action = aCancelarPedido
     Anchors = [akLeft, akBottom]
     TabOrder = 11
+    ExplicitTop = 416
   end
   object bInserir: TButton
     Left = 159
@@ -207,6 +216,7 @@ object formPedido: TformPedido
     Anchors = [akLeft, akBottom]
     ReadOnly = True
     TabOrder = 12
+    ExplicitTop = 387
   end
   object aActionList: TActionList
     Left = 833
@@ -226,6 +236,10 @@ object formPedido: TformPedido
     object aGravarPedido: TAction
       Caption = 'GRAVAR PEDIDO'
       OnExecute = aGravarPedidoExecute
+    end
+    object aLimpar: TAction
+      Caption = 'Limpar'
+      OnExecute = aLimparExecute
     end
   end
 end
